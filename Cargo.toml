@@ -1,0 +1,37 @@
+[package]
+name = "mini-crdt"
+version = "0.1.0"
+edition = "2021"
+description = "Zero-dependency CRDT implementations for Rust"
+license = "MIT"
+repository = "https://github.com/sagami121/mini-crdt"
+keywords = ["crdt", "distributed-systems", "conflict-free", "replicated-data", "gcounter", "lww", "orset"]
+categories = ["data-structures", "distributed-systems"]
+
+[features]
+default = ["std"]
+std = []
+serde = ["dep:serde"]
+# alloc feature for no_std support (requires hashbrown)
+alloc = ["dep:hashbrown"]
+
+[dependencies]
+# Zero mandatory dependencies
+# Optional: serde for serialization support
+serde = { version = "1.0", optional = true, features = ["derive"] }
+# hashbrown for no_std HashMap/HashSet support
+hashbrown = { version = "0.14", optional = true, features = ["serde"] }
+
+[dev-dependencies]
+# Testing only - not part of the published crate
+proptest = "1.0"
+serde_json = "1.0"
+
+[lib]
+name = "mini_crdt"
+path = "src/lib.rs"
+
+[[bench]]
+name = "benches"
+path = "benches/main.rs"
+harness = false
