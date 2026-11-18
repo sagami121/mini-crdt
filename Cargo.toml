@@ -6,7 +6,7 @@ description = "Zero-dependency CRDT implementations for Rust"
 license = "MIT"
 repository = "https://github.com/sagami121/mini-crdt"
 keywords = ["crdt", "distributed", "sync", "data-structures", "state"]
-categories = ["data-structures", "distributed-systems"]
+categories = ["data-structures"]
 
 [features]
 default = ["std"]
