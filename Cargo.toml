@@ -5,7 +5,7 @@ edition = "2021"
 description = "Zero-dependency CRDT implementations for Rust"
 license = "MIT"
 repository = "https://github.com/sagami121/mini-crdt"
-keywords = ["crdt", "distributed-systems", "conflict-free", "replicated-data", "gcounter", "lww", "orset"]
+keywords = ["crdt", "distributed", "sync", "data-structures", "state"]
 categories = ["data-structures", "distributed-systems"]
 
 [features]
