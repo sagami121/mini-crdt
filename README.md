@@ -2,8 +2,8 @@
 
 [![Crates.io](https://img.shields.io/crates/v/mini-crdt.svg)](https://crates.io/crates/mini-crdt)
 [![Documentation](https://docs.rs/mini-crdt/badge.svg)](https://docs.rs/mini-crdt)
-[![License](https://img.shields.io/crates/l/mini-crdt.svg)](https://github.com/your-username/mini-crdt/blob/main/LICENSE)
-[![Build Status](https://github.com/your-username/mini-crdt/workflows/CI/badge.svg)](https://github.com/your-username/mini-crdt/actions)
+[![License](https://img.shields.io/crates/l/mini-crdt.svg)](https://github.com/sagami121/mini-crdt/blob/main/LICENSE)
+[![Build Status](https://github.com/sagami121/mini-crdt/workflows/CI/badge.svg)](https://github.com/sagami121/mini-crdt/actions)
 
 Zero-dependency Conflict-free Replicated Data Types (CRDTs) for Rust.
 
