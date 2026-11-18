@@ -37,7 +37,10 @@ use core::hash::Hash;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
-use crate::{HashMap, Merge, CrdtValue, NodeAware, GCounter, Vec};
+#[cfg(feature = "std")]
+use crate::{Merge, CrdtValue, NodeAware, GCounter};
+#[cfg(all(not(feature = "std"), feature = "alloc"))]
+use crate::{Merge, CrdtValue, NodeAware, GCounter, Vec};
 
 /// Error type for PNCounter operations.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -211,7 +214,7 @@ impl<N: Clone + Eq + Hash> NodeAware for PNCounter<N> {
             seen.push(node);
         }
         for node in self.negative.nodes() {
-            if !seen.iter().any(|n| *n == node) {
+            if !seen.contains(&node) {
                 seen.push(node);
             }
         }
@@ -245,6 +248,8 @@ impl<N: Clone + Eq + Hash + fmt::Debug> fmt::Display for PNCounter<N> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[cfg(all(not(feature = "std"), feature = "alloc"))]
+    use alloc::{vec, vec::Vec};
 
     #[test]
     fn test_pncounter_basic() {

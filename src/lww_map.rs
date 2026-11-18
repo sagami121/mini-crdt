@@ -122,7 +122,7 @@ impl<K: Clone + Eq + Hash, V: Clone + PartialEq, N: Clone + Eq + Hash + Ord> LWW
         self.validate_key(&key)?;
         self.validate_value(&value)?;
 
-        let register = self.registers.entry(key).or_insert_with(LWWRegister::new);
+        let register = self.registers.entry(key).or_insert_with(|| LWWRegister::new());
         register.set(node, value, time).map_err(|e| match e {
             LWWRegisterError::InvalidNodeId => LWWMapError::InvalidNodeId,
             LWWRegisterError::InvalidValue => LWWMapError::InvalidValue,
@@ -134,7 +134,7 @@ impl<K: Clone + Eq + Hash, V: Clone + PartialEq, N: Clone + Eq + Hash + Ord> LWW
         self.validate_key(&key)?;
         self.validate_value(&value)?;
 
-        let register = self.registers.entry(key).or_insert_with(LWWRegister::new);
+        let register = self.registers.entry(key).or_insert_with(|| LWWRegister::new());
         register.set_with_timestamp(value, timestamp).map_err(|e| match e {
             LWWRegisterError::InvalidNodeId => LWWMapError::InvalidNodeId,
             LWWRegisterError::InvalidValue => LWWMapError::InvalidValue,
@@ -249,7 +249,7 @@ impl<K: Clone + Eq + Hash, V: Clone + PartialEq, N: Clone + Eq + Hash + Ord> Nod
         let mut seen = Vec::new();
         for register in self.registers.values() {
             if let Some(node) = register.writer() {
-                if !seen.iter().any(|n| *n == node) {
+                if !seen.contains(&node) {
                     seen.push(node);
                 }
             }
@@ -264,7 +264,7 @@ impl<K: Clone + Eq + Hash, V: Clone + PartialEq, N: Clone + Eq + Hash + Ord> Mer
     /// Performs per-key merge of the underlying LWW-Registers.
     fn merge(&mut self, other: &Self) {
         for (key, other_register) in &other.registers {
-            let register = self.registers.entry(key.clone()).or_insert_with(LWWRegister::new);
+            let register = self.registers.entry(key.clone()).or_insert_with(|| LWWRegister::new());
             register.merge(other_register);
         }
     }

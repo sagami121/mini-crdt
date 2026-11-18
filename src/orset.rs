@@ -220,7 +220,7 @@ impl<T: Clone + Eq + Hash, N: Clone + Eq + Hash> ORSet<T, N> {
 
     /// Checks if an element is present (has at least one live tag).
     pub fn contains(&self, element: &T) -> bool {
-        self.elements.get(element).map_or(false, |tags| {
+        self.elements.get(element).is_some_and(|tags| {
             tags.iter().any(|t| !self.tombstones.contains(t))
         })
     }

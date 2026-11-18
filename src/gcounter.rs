@@ -35,7 +35,11 @@ use core::hash::Hash;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
-use crate::{HashMap, Merge, CrdtValue, NodeAware, Vec};
+use crate::{HashMap, Merge, CrdtValue, NodeAware};
+
+#[cfg(test)]
+#[cfg(all(not(feature = "std"), feature = "alloc"))]
+use alloc::vec;
 
 /// Error type for GCounter operations.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -216,7 +220,7 @@ impl<N: Clone + Eq + Hash + fmt::Debug> fmt::Display for GCounter<N> {
 mod tests {
     use super::*;
     #[cfg(all(not(feature = "std"), feature = "alloc"))]
-    use alloc::vec;
+    use alloc::{vec, vec::Vec};
 
     #[test]
     fn test_gcounter_basic() {
